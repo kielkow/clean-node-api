@@ -10,7 +10,7 @@ const makeFakeAccount = (): AccountModel => ({
   password: 'any_password'
 })
 
-const makeAuthentication = (): AuthenticationModel => ({
+const makeFakeAuthentication = (): AuthenticationModel => ({
   email: 'any_email@mail.com',
   password: 'any_password'
 })
@@ -46,8 +46,20 @@ describe('DbAuthentication UseCase', () => {
 
     const loadSpy = jest.spyOn(loadAccountByEmailRepositoryStub, 'load')
 
-    await sut.auth(makeAuthentication())
+    await sut.auth(makeFakeAuthentication())
 
     expect(loadSpy).toHaveBeenLastCalledWith('any_email@mail.com')
+  })
+
+  test('Should throw if LoadAccountByEmailRepository throws', async () => {
+    const { sut, loadAccountByEmailRepositoryStub } = makeSut()
+
+    jest.spyOn(loadAccountByEmailRepositoryStub, 'load').mockReturnValueOnce(
+      new Promise((resolve, reject) => reject(new Error()))
+    )
+
+    const promise = sut.auth(makeFakeAuthentication())
+
+    await expect(promise).rejects.toThrow()
   })
 })
