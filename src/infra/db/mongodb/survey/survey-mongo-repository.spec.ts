@@ -39,7 +39,7 @@ describe('Survey Mongo Repository', () => {
       ]
     })
 
-    const survey = surveyCollection.findOne({ question: 'any_question' })
+    const survey = await surveyCollection.findOne({ question: 'any_question' })
 
     expect(survey).toBeTruthy()
   })
