@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/kielkow/clean-node-api.svg?branch=master)](https://travis-ci.com/kielkow/clean-node-api)
+[![Coverage Status](https://coveralls.io/repos/github/kielkow/clean-node-api/badge.svg)](https://coveralls.io/github/kielkow/clean-node-api)
+
 ## [**Link para a documentação da API**](http://fordevs.herokuapp.com/api-docs)
 
 > ## APIs construídas no treinamento
