@@ -1,4 +1,4 @@
-import { throwError } from '@/domain/test'
+import { mockAccountModel, throwError } from '@/domain/test'
 import { DbAuthentication } from './db-authentication'
 import {
   AccountModel,
@@ -9,13 +9,6 @@ import {
   UpdateAccessTokenRepository
 } from './db-authentication-protocols'
 
-const makeFakeAccount = (): AccountModel => ({
-  id: 'any_id',
-  name: 'any_name',
-  email: 'any_email@mail.com',
-  password: 'hashed_password'
-})
-
 const makeFakeAuthentication = (): AuthenticationParams => ({
   email: 'any_email@mail.com',
   password: 'any_password'
@@ -24,7 +17,7 @@ const makeFakeAuthentication = (): AuthenticationParams => ({
 const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
     async loadByEmail (email: string): Promise<AccountModel> {
-      return await new Promise(resolve => resolve(makeFakeAccount()))
+      return await new Promise(resolve => resolve(mockAccountModel()))
     }
   }
 
@@ -129,7 +122,7 @@ describe('DbAuthentication UseCase', () => {
 
     await sut.auth(makeFakeAuthentication())
 
-    expect(comparerSpy).toHaveBeenLastCalledWith('any_password', 'hashed_password')
+    expect(comparerSpy).toHaveBeenLastCalledWith('any_password', 'any_password')
   })
 
   test('Should throw if HashComparer throws', async () => {
