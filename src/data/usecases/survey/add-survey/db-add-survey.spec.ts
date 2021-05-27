@@ -1,7 +1,10 @@
 import { DbAddSurvey } from './db-add-survey'
 import { AddSurveyParams, AddSurveyRepository } from './db-add-survey-protocols'
-import MockDate from 'mockdate'
+
 import { throwError } from '@/domain/test'
+import { mockAddSurveyRepository } from '@/data/test'
+
+import MockDate from 'mockdate'
 
 const makeFakeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
@@ -12,23 +15,13 @@ const makeFakeSurveyData = (): AddSurveyParams => ({
   date: new Date()
 })
 
-const makeAddSurveyRepository = (): AddSurveyRepository => {
-  class AddSurveyRepositoryStub implements AddSurveyRepository {
-    async add (surveyData: AddSurveyParams): Promise<void> {
-      return await new Promise(resolve => resolve())
-    }
-  }
-
-  return new AddSurveyRepositoryStub()
-}
-
 type SutTypes = {
   sut: DbAddSurvey
   addSurveyRepositoryStub: AddSurveyRepository
 }
 
 const makeSut = (): SutTypes => {
-  const addSurveyRepositoryStub = makeAddSurveyRepository()
+  const addSurveyRepositoryStub = mockAddSurveyRepository()
   const sut = new DbAddSurvey(addSurveyRepositoryStub)
 
   return {
