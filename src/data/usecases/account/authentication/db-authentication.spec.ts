@@ -1,5 +1,5 @@
 import { mockEncrypter, mockHashComparer, mockLoadAccountByEmailRepository, mockUpdateAccessTokenRepository } from '@/data/test'
-import { mockFakeAuthentication, throwError } from '@/domain/test'
+import { mockAuthentication, throwError } from '@/domain/test'
 import { DbAuthentication } from './db-authentication'
 import {
   HashComparer,
@@ -44,7 +44,7 @@ describe('DbAuthentication UseCase', () => {
 
     const loadSpy = jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail')
 
-    await sut.auth(mockFakeAuthentication())
+    await sut.auth(mockAuthentication())
 
     expect(loadSpy).toHaveBeenLastCalledWith('any_email@mail.com')
   })
@@ -54,7 +54,7 @@ describe('DbAuthentication UseCase', () => {
 
     jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockImplementationOnce(throwError)
 
-    const promise = sut.auth(mockFakeAuthentication())
+    const promise = sut.auth(mockAuthentication())
 
     await expect(promise).rejects.toThrow()
   })
@@ -64,7 +64,7 @@ describe('DbAuthentication UseCase', () => {
 
     jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(null)
 
-    const accessToken = await sut.auth(mockFakeAuthentication())
+    const accessToken = await sut.auth(mockAuthentication())
 
     expect(accessToken).toBeNull()
   })
@@ -74,7 +74,7 @@ describe('DbAuthentication UseCase', () => {
 
     const comparerSpy = jest.spyOn(hashComparerStub, 'compare')
 
-    await sut.auth(mockFakeAuthentication())
+    await sut.auth(mockAuthentication())
 
     expect(comparerSpy).toHaveBeenLastCalledWith('any_password', 'any_password')
   })
@@ -84,7 +84,7 @@ describe('DbAuthentication UseCase', () => {
 
     jest.spyOn(hashComparerStub, 'compare').mockImplementationOnce(throwError)
 
-    const promise = sut.auth(mockFakeAuthentication())
+    const promise = sut.auth(mockAuthentication())
 
     await expect(promise).rejects.toThrow()
   })
@@ -96,7 +96,7 @@ describe('DbAuthentication UseCase', () => {
       new Promise(resolve => resolve(false))
     )
 
-    const accessToken = await sut.auth(mockFakeAuthentication())
+    const accessToken = await sut.auth(mockAuthentication())
 
     expect(accessToken).toBeNull()
   })
@@ -106,7 +106,7 @@ describe('DbAuthentication UseCase', () => {
 
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
 
-    await sut.auth(mockFakeAuthentication())
+    await sut.auth(mockAuthentication())
 
     expect(encryptSpy).toHaveBeenLastCalledWith('any_id')
   })
@@ -116,7 +116,7 @@ describe('DbAuthentication UseCase', () => {
 
     jest.spyOn(encrypterStub, 'encrypt').mockImplementationOnce(throwError)
 
-    const promise = sut.auth(mockFakeAuthentication())
+    const promise = sut.auth(mockAuthentication())
 
     await expect(promise).rejects.toThrow()
   })
@@ -124,7 +124,7 @@ describe('DbAuthentication UseCase', () => {
   test('Should return a token on success', async () => {
     const { sut } = makeSut()
 
-    const accessToken = await sut.auth(mockFakeAuthentication())
+    const accessToken = await sut.auth(mockAuthentication())
 
     expect(accessToken).toBe('any_token')
   })
@@ -134,7 +134,7 @@ describe('DbAuthentication UseCase', () => {
 
     const updateSpy = jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken')
 
-    await sut.auth(mockFakeAuthentication())
+    await sut.auth(mockAuthentication())
 
     expect(updateSpy).toHaveBeenLastCalledWith('any_id', 'any_token')
   })
@@ -144,7 +144,7 @@ describe('DbAuthentication UseCase', () => {
 
     jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken').mockImplementationOnce(throwError)
 
-    const promise = sut.auth(mockFakeAuthentication())
+    const promise = sut.auth(mockAuthentication())
 
     await expect(promise).rejects.toThrow()
   })
