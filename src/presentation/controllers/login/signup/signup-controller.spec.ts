@@ -11,6 +11,7 @@ import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/
 import { HttpRequest } from '@/presentation/protocols'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { mockAccountModel, throwError } from '@/domain/test'
+import { mockValidation } from '@/validation/test'
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
@@ -32,16 +33,6 @@ const makeAuthentication = (): Authentication => {
   return new AuthenticationStub()
 }
 
-const makeValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-
-  return new ValidationStub()
-}
-
 const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
@@ -61,7 +52,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const authenticationStub = makeAuthentication()
   const addAccountStub = makeAddAccount()
-  const validationStub = makeValidation()
+  const validationStub = mockValidation()
 
   const sut = new SignUpController(addAccountStub, validationStub, authenticationStub)
 

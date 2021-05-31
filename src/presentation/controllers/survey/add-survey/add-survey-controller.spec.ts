@@ -8,6 +8,7 @@ import { AddSurveyController } from './add-survey-controller'
 import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
 import MockDate from 'mockdate'
 import { throwError } from '@/domain/test'
+import { mockValidation } from '@/validation/test'
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
@@ -19,16 +20,6 @@ const makeFakeRequest = (): HttpRequest => ({
     date: new Date()
   }
 })
-
-const makeValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-
-  return new ValidationStub()
-}
 
 const makeAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {
@@ -47,7 +38,7 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const validationStub = makeValidation()
+  const validationStub = mockValidation()
   const addSurveyStub = makeAddSurvey()
 
   const sut = new AddSurveyController(validationStub, addSurveyStub)

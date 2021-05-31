@@ -3,6 +3,7 @@ import { Authentication, AuthenticationParams, HttpRequest, Validation } from '.
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
 import { throwError } from '@/domain/test'
+import { mockValidation } from '@/validation/test'
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
@@ -12,16 +13,6 @@ const makeAuthentication = (): Authentication => {
   }
 
   return new AuthenticationStub()
-}
-
-const makeValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-
-  return new ValidationStub()
 }
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -39,7 +30,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const authenticationStub = makeAuthentication()
-  const validationStub = makeValidation()
+  const validationStub = mockValidation()
 
   const sut = new LoginController(authenticationStub, validationStub)
 
