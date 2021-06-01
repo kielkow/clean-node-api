@@ -10,7 +10,7 @@ import MockDate from 'mockdate'
 import { throwError } from '@/domain/test'
 import { mockValidation } from '@/validation/test'
 
-const makeFakeRequest = (): HttpRequest => ({
+const mockRequest = (): HttpRequest => ({
   body: {
     question: 'any_question',
     answers: [{
@@ -64,7 +64,7 @@ describe('AddSurvey COntroller', () => {
 
     const validateSpy = jest.spyOn(validationStub, 'validate')
 
-    const httpRequest = makeFakeRequest()
+    const httpRequest = mockRequest()
 
     await sut.handle(httpRequest)
 
@@ -76,7 +76,7 @@ describe('AddSurvey COntroller', () => {
 
     jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error())
 
-    const httpResponse = await sut.handle(makeFakeRequest())
+    const httpResponse = await sut.handle(mockRequest())
 
     expect(httpResponse).toEqual(badRequest(new Error()))
   })
@@ -86,7 +86,7 @@ describe('AddSurvey COntroller', () => {
 
     const addSpy = jest.spyOn(addSurveyStub, 'add')
 
-    const httpRequest = makeFakeRequest()
+    const httpRequest = mockRequest()
 
     await sut.handle(httpRequest)
 
@@ -98,7 +98,7 @@ describe('AddSurvey COntroller', () => {
 
     jest.spyOn(addSurveyStub, 'add').mockImplementationOnce(throwError)
 
-    const httpResponse = await sut.handle(makeFakeRequest())
+    const httpResponse = await sut.handle(mockRequest())
 
     expect(httpResponse).toEqual(serverError(new Error()))
   })
@@ -106,7 +106,7 @@ describe('AddSurvey COntroller', () => {
   test('Should return 204 on success', async () => {
     const { sut } = makeSut()
 
-    const httpResponse = await sut.handle(makeFakeRequest())
+    const httpResponse = await sut.handle(mockRequest())
 
     expect(httpResponse).toEqual(noContent())
   })
