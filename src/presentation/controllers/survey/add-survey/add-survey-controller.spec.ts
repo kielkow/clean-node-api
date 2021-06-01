@@ -8,7 +8,7 @@ import { AddSurveyController } from './add-survey-controller'
 import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
 import MockDate from 'mockdate'
 import { throwError } from '@/domain/test'
-import { mockValidation } from '@/validation/test'
+import { mockValidation } from '@/presentation/test'
 
 const mockRequest = (): HttpRequest => ({
   body: {

@@ -10,8 +10,7 @@ import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/
 import { HttpRequest } from '@/presentation/protocols'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { mockAccountModel, throwError } from '@/domain/test'
-import { mockValidation } from '@/validation/test'
-import { mockAuthentication } from '@/presentation/test'
+import { mockAuthentication, mockValidation } from '@/presentation/test'
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
