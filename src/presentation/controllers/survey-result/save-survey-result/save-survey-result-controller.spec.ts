@@ -3,7 +3,6 @@ import {
   LoadSurveyById,
   SaveSurveyResult,
   SaveSurveyResultParams,
-  SurveyModel,
   SurveyResultModel
 } from './save-survey-result-controller-protocols'
 import { SaveSurveyResultController } from './save-survey-result-controller'
@@ -11,7 +10,8 @@ import { SaveSurveyResultController } from './save-survey-result-controller'
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
 
-import { throwError, mockSurveyModel, mockSurveyResultModel } from '@/domain/test'
+import { mockLoadSurveyById } from '@/presentation/test/mock-survey'
+import { throwError, mockSurveyResultModel } from '@/domain/test'
 
 import MockDate from 'mockdate'
 
@@ -24,16 +24,6 @@ const mockRequest = (): HttpRequest => ({
   },
   accountId: 'any_account_id'
 })
-
-const makeLoadSurveyById = (): LoadSurveyById => {
-  class LoadSurveyByIdStub implements LoadSurveyById {
-    async loadById (id: string): Promise<SurveyModel> {
-      return await new Promise(resolve => resolve(mockSurveyModel()))
-    }
-  }
-
-  return new LoadSurveyByIdStub()
-}
 
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
@@ -52,7 +42,7 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const loadSurveyByIdStub = makeLoadSurveyById()
+  const loadSurveyByIdStub = mockLoadSurveyById()
   const saveSurveyResultStub = makeSaveSurveyResult()
 
   const sut = new SaveSurveyResultController(
