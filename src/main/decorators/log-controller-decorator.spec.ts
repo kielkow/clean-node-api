@@ -11,7 +11,7 @@ import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      return await new Promise(resolve => resolve(ok(mockAccountModel())))
+      return await Promise.resolve(ok(mockAccountModel()))
     }
   }
 
@@ -78,7 +78,7 @@ describe('LogController Decorator', () => {
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError')
 
     jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(
-      new Promise(resolve => resolve(mockServerError()))
+      Promise.resolve(mockServerError())
     )
 
     await sut.handle(mockRequest())

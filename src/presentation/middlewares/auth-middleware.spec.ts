@@ -51,7 +51,7 @@ describe('Auth Middleware', () => {
     const { sut, loadAccountByTokenStub } = makeSut()
 
     jest.spyOn(loadAccountByTokenStub, 'load').mockReturnValueOnce(
-      new Promise(resolve => resolve(null))
+      Promise.resolve(null)
     )
 
     const httpResponse = await sut.handle({})
