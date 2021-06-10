@@ -13,7 +13,14 @@ export const loginPath = {
     },
     responses: {
       200: {
-        $ref: '#/components/success'
+        description: 'Sucess',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/schemas/account'
+            }
+          }
+        }
       },
       400: {
         $ref: '#/components/badRequest'
