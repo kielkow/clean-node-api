@@ -1,21 +1,22 @@
 export const surveyResultPath = {
   put: {
-    security: [
-      {
-        apiKeyAuth: []
-      }
-    ],
+    security: [{
+      apiKeyAuth: []
+    }],
     tags: ['Survey'],
-    summary: 'API to create an survey result',
+    summary: 'API to create survey result',
+    description: 'This route can be executed by **authenticated users**',
     parameters: [{
       in: 'path',
       name: 'surveyId',
+      description: 'survey ID',
       required: true,
       schema: {
         type: 'string'
       }
     }],
     requestBody: {
+      required: true,
       content: {
         'application/json': {
           schema: {

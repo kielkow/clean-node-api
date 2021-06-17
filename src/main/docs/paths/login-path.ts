@@ -2,7 +2,9 @@ export const loginPath = {
   post: {
     tags: ['Login'],
     summary: 'API to authenticate user',
+    description: 'This route can be executed by **any user**',
     requestBody: {
+      required: true,
       content: {
         'application/json': {
           schema: {

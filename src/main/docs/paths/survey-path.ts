@@ -1,12 +1,11 @@
 export const surveyPath = {
   get: {
-    security: [
-      {
-        apiKeyAuth: []
-      }
-    ],
+    security: [{
+      apiKeyAuth: []
+    }],
     tags: ['Survey'],
     summary: 'API to list surveys',
+    description: 'This route can be executed by **authenticated users**',
     responses: {
       200: {
         description: 'Sucess',
@@ -17,6 +16,9 @@ export const surveyPath = {
             }
           }
         }
+      },
+      204: {
+        description: 'Sucess, but without data to response'
       },
       403: {
         $ref: '#/components/forbidden'
@@ -30,14 +32,14 @@ export const surveyPath = {
     }
   },
   post: {
-    security: [
-      {
-        apiKeyAuth: []
-      }
-    ],
+    security: [{
+      apiKeyAuth: []
+    }],
     tags: ['Survey'],
     summary: 'API to create survey',
+    description: 'This route can be executed by **admins**',
     requestBody: {
+      required: true,
       content: {
         'application/json': {
           schema: {
@@ -48,7 +50,7 @@ export const surveyPath = {
     },
     responses: {
       204: {
-        description: 'Sucess'
+        description: 'Sucess, but without data to response'
       },
       403: {
         $ref: '#/components/forbidden'
