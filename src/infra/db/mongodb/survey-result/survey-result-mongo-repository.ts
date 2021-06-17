@@ -1,9 +1,7 @@
-import {
-  SaveSurveyResultParams,
-  SaveSurveyResultRepository,
-  SurveyResultModel
-} from '@/data/usecases/survey-result/save-survey-result/db-save-survey-result-protocols'
+import { SaveSurveyResultRepository } from '@/data/protocols/db/survey-result/save-survey-result-repository'
 import { MongoHelper, QueryBuilder } from '../helpers'
+import { SurveyResultModel } from '@/domain/models/survey-result'
+import { SaveSurveyResultParams } from '@/domain/usecases/survey-result/save-survey-result'
 import { ObjectId } from 'mongodb'
 
 export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
@@ -24,16 +22,15 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
 
     const surveyResult = await this.loadBySurveyId(data.surveyId)
 
-    console.log(surveyResult)
-
     return surveyResult
   }
 
   private async loadBySurveyId (surveyId: string): Promise<SurveyResultModel> {
     const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
-
     const query = new QueryBuilder()
-      .match({ surveyId: new ObjectId(surveyId) })
+      .match({
+        surveyId: new ObjectId(surveyId)
+      })
       .group({
         _id: 0,
         data: {
@@ -43,7 +40,9 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
           $sum: 1
         }
       })
-      .unwind({ path: '$data' })
+      .unwind({
+        path: '$data'
+      })
       .lookup({
         from: 'surveys',
         foreignField: '_id',
@@ -79,12 +78,9 @@ export class SurveyResultMongoRepository implements SaveSurveyResultRepository {
       .addFields({
         '_id.answer.count': '$count',
         '_id.answer.percent': {
-          $multiply: [
-            {
-              $divide: ['$count', '$_id.total']
-            },
-            100
-          ]
+          $multiply: [{
+            $divide: ['$count', '$_id.total']
+          }, 100]
         }
       })
       .group({

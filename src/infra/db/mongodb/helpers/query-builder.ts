@@ -5,7 +5,6 @@ export class QueryBuilder {
     this.query.push({
       $match: data
     })
-
     return this
   }
 
@@ -13,7 +12,6 @@ export class QueryBuilder {
     this.query.push({
       $group: data
     })
-
     return this
   }
 
@@ -21,7 +19,6 @@ export class QueryBuilder {
     this.query.push({
       $unwind: data
     })
-
     return this
   }
 
@@ -29,7 +26,6 @@ export class QueryBuilder {
     this.query.push({
       $lookup: data
     })
-
     return this
   }
 
@@ -37,7 +33,6 @@ export class QueryBuilder {
     this.query.push({
       $addFields: data
     })
-
     return this
   }
 
@@ -45,7 +40,6 @@ export class QueryBuilder {
     this.query.push({
       $project: data
     })
-
     return this
   }
 

@@ -1,31 +1,34 @@
 import paths from './paths'
-import schemas from './schemas'
 import components from './components'
+import schemas from './schemas'
 
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Clean Node API',
-    description: 'An completed API with Typescript using TDD, Clean Architecture, Design Patterns and SOLID.',
-    version: '2.2.0'
-  },
-  license: {
-    name: 'ISC',
-    url: 'https://opensource.org/licenses/ISC'
-  },
-  servers: [
-    {
-      url: '/api'
-    }
-  ],
-  tags: [
-    {
-      name: 'Login'
+    title: '4Dev - Surveys to Developers',
+    description: 'This is API documentation made using Typescript, TDD, Clean Architecture and following the principles of SOLID and Design Patterns.',
+    version: '1.0.0',
+    contact: {
+      name: 'Matheus Kielkowski',
+      email: 'matheuskiel@fiorifer.com.br',
+      url: 'https://www.linkedin.com/in/matheus-kielkowski-429b1617a/'
     },
-    {
-      name: 'Survey'
+    license: {
+      name: 'ISC',
+      url: 'https://opensource.org/licenses/ISC'
     }
-  ],
+  },
+  servers: [{
+    url: '/api',
+    description: 'Main Server'
+  }],
+  tags: [{
+    name: 'Login',
+    description: 'Login APIs'
+  }, {
+    name: 'Survey',
+    description: 'Survey APIs'
+  }],
   paths,
   schemas,
   components

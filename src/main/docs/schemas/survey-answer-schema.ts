@@ -8,5 +8,5 @@ export const surveyAnswerSchema = {
       type: 'string'
     }
   },
-  required: ['image', 'answer']
+  required: ['answer']
 }

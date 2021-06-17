@@ -1,8 +1,8 @@
-import { AccountModel } from '@/domain/models/account'
-import { SurveyModel } from '@/domain/models/survey'
-import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
+import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection, ObjectId } from 'mongodb'
+import { SurveyModel } from '@/domain/models/survey'
+import { AccountModel } from '@/domain/models/account'
 
 let surveyCollection: Collection
 let surveyResultCollection: Collection
@@ -15,15 +15,12 @@ const makeSut = (): SurveyResultMongoRepository => {
 const makeSurvey = async (): Promise<SurveyModel> => {
   const res = await surveyCollection.insertOne({
     question: 'any_question',
-    answers: [
-      {
-        image: 'any_image',
-        answer: 'any_answer'
-      },
-      {
-        answer: 'other_answer'
-      }
-    ],
+    answers: [{
+      image: 'any_image',
+      answer: 'any_answer'
+    }, {
+      answer: 'other_answer'
+    }],
     date: new Date()
   })
 
@@ -40,7 +37,7 @@ const makeAccount = async (): Promise<AccountModel> => {
   return MongoHelper.map(res.ops[0])
 }
 
-describe('SurveyResult Mongo Repository', () => {
+describe('Survey Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -61,7 +58,7 @@ describe('SurveyResult Mongo Repository', () => {
   })
 
   describe('save()', () => {
-    test('Should add an survey result if its new', async () => {
+    test('Should add a survey result if its new', async () => {
       const survey = await makeSurvey()
       const account = await makeAccount()
       const sut = makeSut()

@@ -1,5 +1,4 @@
 import { apiKeyAuthSchema } from './schemas/'
-
 import {
   badRequest,
   serverError,
