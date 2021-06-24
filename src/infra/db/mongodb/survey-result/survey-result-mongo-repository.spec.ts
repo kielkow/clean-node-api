@@ -1,8 +1,11 @@
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { Collection, ObjectId } from 'mongodb'
+
 import { SurveyModel } from '@/domain/models/survey'
 import { AccountModel } from '@/domain/models/account'
+
+import { Collection, ObjectId } from 'mongodb'
+import MockDate from 'mockdate'
 
 let surveyCollection: Collection
 let surveyResultCollection: Collection
@@ -46,10 +49,12 @@ const makeAccount = async (): Promise<AccountModel> => {
 describe('Survey Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
+    MockDate.set(new Date())
   })
 
   afterAll(async () => {
     await MongoHelper.disconnect()
+    MockDate.reset()
   })
 
   beforeEach(async () => {
