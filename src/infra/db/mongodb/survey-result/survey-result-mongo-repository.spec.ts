@@ -114,6 +114,7 @@ describe('Survey Mongo Repository', () => {
       }).toArray()
 
       expect(surveyResult).toBeTruthy()
+      expect(surveyResult.length).toBe(1)
     })
   })
 
