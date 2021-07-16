@@ -7,8 +7,8 @@ import { SaveSurveyResultController } from './save-survey-result-controller'
 
 import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
-
 import { mockLoadSurveyById, mockSaveSurveyResult } from '@/presentation/test'
+
 import { throwError, mockSurveyResultModel } from '@/domain/test'
 
 import MockDate from 'mockdate'
