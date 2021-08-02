@@ -1,12 +1,21 @@
-import { LogControllerDecorator } from './log-controller-decorator'
+import { mockAccountModel } from '../../domain/mocks'
 
-import { mockAccountModel } from '@/domain/test'
+import { mockLogErrorRepository } from '../../data/mocks'
 
-import { mockLogErrorRepository } from '@/data/test'
-import { LogErrorRepository } from '@/data/protocols/db/log/log-error-repository'
+import {
+  LogControllerDecorator
+} from '@/main/decorators/log-controller-decorator'
+
+import {
+  LogErrorRepository
+} from '@/data/protocols/db/log/log-error-repository'
 
 import { ok, serverError } from '@/presentation/helpers/http/http-helper'
-import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
+import {
+  Controller,
+  HttpRequest,
+  HttpResponse
+} from '@/presentation/protocols'
 
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
