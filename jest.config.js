@@ -2,7 +2,9 @@ module.exports = {
   roots: ['<rootDir>/tests'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/main/**'
+    '!<rootDir>/src/main/**',
+    '!<rootDir>/src/presentation/errors/**',
+    '!<rootDir>/src/presentation/helpers/**'
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',
