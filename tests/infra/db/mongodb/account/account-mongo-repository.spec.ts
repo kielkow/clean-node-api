@@ -1,7 +1,9 @@
-import { MongoHelper } from '../helpers/mongo-helper'
-import { AccountMongoRepository } from './account-mongo-repository'
+import { MongoHelper } from '@/infra/db/mongodb/helpers'
+import {
+  AccountMongoRepository
+} from '@/infra/db/mongodb/account/account-mongo-repository'
 
-import { mockAddAccountParams } from '@/domain/test'
+import { mockAddAccountParams } from '../../../../domain/mocks'
 
 import { Collection } from 'mongodb'
 
