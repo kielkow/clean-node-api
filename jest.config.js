@@ -4,7 +4,9 @@ module.exports = {
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/main/**',
     '!<rootDir>/src/presentation/errors/**',
-    '!<rootDir>/src/presentation/helpers/**'
+    '!<rootDir>/src/presentation/helpers/**',
+    '!<rootDir>/src/presentation/protocols/**',
+    '!<rootDir>/src/domain/**'
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',
