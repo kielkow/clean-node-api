@@ -3,12 +3,12 @@ import { mockAuthentication, mockValidation } from '../../mocks'
 
 import {
   LoginController
-} from '@/presentation/controllers/login/login/login-controller'
+} from '@/presentation/controllers/account/login/login-controller'
 import {
   Authentication,
   HttpRequest,
   Validation
-} from '@/presentation/controllers/login/login/login-controller-protocols'
+} from '@/presentation/controllers/account/login/login-controller-protocols'
 
 import { MissingParamError } from '@/presentation/errors'
 import {

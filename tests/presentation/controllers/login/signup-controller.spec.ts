@@ -7,12 +7,12 @@ import {
 
 import {
   SignUpController
-} from '@/presentation/controllers/login/signup/signup-controller'
+} from '@/presentation/controllers/account/signup/signup-controller'
 import {
   AddAccount,
   Authentication,
   Validation
-} from '@/presentation/controllers/login/signup/signup-controller-protocols'
+} from '@/presentation/controllers/account/signup/signup-controller-protocols'
 
 import {
   EmailInUseError,
