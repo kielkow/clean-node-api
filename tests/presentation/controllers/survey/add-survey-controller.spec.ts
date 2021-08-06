@@ -1,11 +1,12 @@
 import { throwError } from '../../../domain/mocks'
+
 import { mockAddSurvey, mockValidation } from '../../mocks'
 
 import {
   AddSurvey,
-  HttpRequest,
   Validation
 } from '@/presentation/controllers/survey/add-survey/add-survey-controller-protocols'
+
 import {
   AddSurveyController
 } from '@/presentation/controllers/survey/add-survey/add-survey-controller'
@@ -18,15 +19,12 @@ import {
 
 import MockDate from 'mockdate'
 
-const mockRequest = (): HttpRequest => ({
-  body: {
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    }],
-    date: new Date()
-  }
+const mockRequest = (): AddSurveyController.Request => ({
+  question: 'any_question',
+  answers: [{
+    image: 'any_image',
+    answer: 'any_answer'
+  }]
 })
 
 type SutTypes = {
@@ -62,11 +60,11 @@ describe('AddSurvey COntroller', () => {
 
     const validateSpy = jest.spyOn(validationStub, 'validate')
 
-    const httpRequest = mockRequest()
+    const request = mockRequest()
 
-    await sut.handle(httpRequest)
+    await sut.handle(request)
 
-    expect(validateSpy).toHaveBeenLastCalledWith(httpRequest.body)
+    expect(validateSpy).toHaveBeenLastCalledWith(request)
   })
 
   test('Should return 400 if Validation fails', async () => {
@@ -84,11 +82,11 @@ describe('AddSurvey COntroller', () => {
 
     const addSpy = jest.spyOn(addSurveyStub, 'add')
 
-    const httpRequest = mockRequest()
+    const request = mockRequest()
 
-    await sut.handle(httpRequest)
+    await sut.handle(request)
 
-    expect(addSpy).toHaveBeenLastCalledWith(httpRequest.body)
+    expect(addSpy).toHaveBeenLastCalledWith({ ...request, date: new Date() })
   })
 
   test('Should return 500 if AddSurvey throws', async () => {

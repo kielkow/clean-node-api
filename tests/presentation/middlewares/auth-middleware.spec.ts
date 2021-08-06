@@ -1,10 +1,11 @@
 import { throwError } from '../../domain/mocks'
+
 import { mockLoadAccountByToken } from '../mocks'
 
 import { AuthMiddleware } from '@/presentation/middlewares/auth-middleware'
+
 import {
-  LoadAccountByToken,
-  HttpRequest
+  LoadAccountByToken
 } from '@/presentation/middlewares/auth-middleware-protocols'
 
 import {
@@ -12,12 +13,11 @@ import {
   ok,
   serverError
 } from '@/presentation/helpers/http/http-helper'
+
 import { AccessDeniedError } from '@/presentation/errors'
 
-const mockRequest = (): HttpRequest => ({
-  headers: {
-    'x-access-token': 'any_token'
-  }
+const mockRequest = (): AuthMiddleware.Request => ({
+  accessToken: 'any_token'
 })
 
 type SutTypes = {
@@ -79,7 +79,9 @@ describe('Auth Middleware', () => {
   test('Should return 500 if LoadAccountByToken throws', async () => {
     const { sut, loadAccountByTokenStub } = makeSut()
 
-    jest.spyOn(loadAccountByTokenStub, 'load').mockImplementationOnce(throwError)
+    jest.spyOn(loadAccountByTokenStub, 'load').mockImplementationOnce(
+      throwError
+    )
 
     const httpResponse = await sut.handle(mockRequest())
 

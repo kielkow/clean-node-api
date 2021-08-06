@@ -11,15 +11,15 @@ import {
 } from '@/data/protocols/db/log/log-error-repository'
 
 import { ok, serverError } from '@/presentation/helpers/http/http-helper'
+
 import {
   Controller,
-  HttpRequest,
   HttpResponse
 } from '@/presentation/protocols'
 
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
-    async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+    async handle (request: any): Promise<HttpResponse> {
       return await Promise.resolve(ok(mockAccountModel()))
     }
   }
@@ -27,7 +27,7 @@ const makeController = (): Controller => {
   return new ControllerStub()
 }
 
-const mockRequest = (): HttpRequest => ({
+const mockRequest = (): any => ({
   body: {
     name: 'any_name',
     email: 'any_email@mail.com',
