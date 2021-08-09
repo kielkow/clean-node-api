@@ -3,13 +3,14 @@ import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-a
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
 import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
 
-import { AddAccountParams } from '@/domain/usecases/account/add-account'
 import { AccountModel } from '@/domain/models/account'
 import { mockAccountModel } from '../../domain/mocks'
 
 export const mockAddAccountReposiory = (): AddAccountReposiory => {
   class AddAccountReposioryStub implements AddAccountReposiory {
-    async add (accountData: AddAccountParams): Promise<AccountModel> {
+    async add (
+      accountData: AddAccountReposiory.Params
+    ): Promise<AddAccountReposiory.Result> {
       return await Promise.resolve(mockAccountModel())
     }
   }

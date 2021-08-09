@@ -1,13 +1,24 @@
-import { AddAccountReposiory } from '@/data/protocols/db/account/add-account-repository'
-import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
-import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
-import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository'
+import {
+  AddAccountReposiory
+} from '@/data/protocols/db/account/add-account-repository'
+import {
+  LoadAccountByEmailRepository
+} from '@/data/protocols/db/account/load-account-by-email-repository'
+import {
+  LoadAccountByTokenRepository
+} from '@/data/protocols/db/account/load-account-by-token-repository'
+import {
+  UpdateAccessTokenRepository
+} from '@/data/protocols/db/account/update-access-token-repository'
+
 import { AccountModel } from '@/domain/models/account'
-import { AddAccountParams } from '@/domain/usecases/account/add-account'
-import { MongoHelper } from '../helpers/mongo-helper'
+
+import { MongoHelper } from '@/infra/db/mongodb/helpers'
 
 export class AccountMongoRepository implements AddAccountReposiory, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
-  async add (accountData: AddAccountParams): Promise<AccountModel> {
+  async add (
+    accountData: AddAccountReposiory.Params
+  ): Promise<AddAccountReposiory.Result> {
     const accountCollection = await MongoHelper.getCollection('accounts')
 
     const result = await accountCollection.insertOne(accountData)
