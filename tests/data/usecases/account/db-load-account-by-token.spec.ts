@@ -1,6 +1,6 @@
 import { mockDecrypter, mockLoadAccountByTokenRepository } from '../../mocks'
 
-import { mockAccountModel, throwError } from '../../../domain/mocks'
+import { throwError } from '../../../domain/mocks'
 
 import {
   DbLoadAccountByToken
@@ -78,7 +78,12 @@ describe('DbLoadAccountByTokenm', () => {
 
     const account = await sut.load('any_token', 'any_role')
 
-    expect(account).toEqual(mockAccountModel())
+    expect(account).toEqual({
+      id: 'any_id',
+      name: 'any_name',
+      email: 'any_email@mail.com',
+      password: 'any_password'
+    })
   })
 
   test('Should throw if Decrypter throws', async () => {

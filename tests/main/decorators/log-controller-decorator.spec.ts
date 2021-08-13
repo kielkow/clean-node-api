@@ -1,5 +1,3 @@
-import { mockAccountModel } from '../../domain/mocks'
-
 import { mockLogErrorRepository } from '../../data/mocks'
 
 import {
@@ -20,7 +18,7 @@ import {
 const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (request: any): Promise<HttpResponse> {
-      return await Promise.resolve(ok(mockAccountModel()))
+      return await Promise.resolve(ok('ok'))
     }
   }
 
@@ -78,7 +76,7 @@ describe('LogController Decorator', () => {
 
     const httpResponse = await sut.handle(mockRequest())
 
-    expect(httpResponse).toEqual(ok(mockAccountModel()))
+    expect(httpResponse).toEqual(ok('ok'))
   })
 
   test('Should call LogErrorRepository with correct error if controller returns a server error', async () => {

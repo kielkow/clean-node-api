@@ -1,5 +1,5 @@
 import {
-  AddAccountReposiory
+  AddAccountRepository
 } from '@/data/protocols/db/account/add-account-repository'
 import {
   LoadAccountByEmailRepository
@@ -11,15 +11,12 @@ import {
   UpdateAccessTokenRepository
 } from '@/data/protocols/db/account/update-access-token-repository'
 
-import { AccountModel } from '@/domain/models/account'
-import { mockAccountModel } from '../../domain/mocks'
-
-export const mockAddAccountReposiory = (): AddAccountReposiory => {
-  class AddAccountReposioryStub implements AddAccountReposiory {
+export const mockAddAccountReposiory = (): AddAccountRepository => {
+  class AddAccountReposioryStub implements AddAccountRepository {
     async add (
-      accountData: AddAccountReposiory.Params
-    ): Promise<AddAccountReposiory.Result> {
-      return await Promise.resolve(mockAccountModel())
+      accountData: AddAccountRepository.Params
+    ): Promise<AddAccountRepository.Result> {
+      return await Promise.resolve(true)
     }
   }
 
@@ -28,8 +25,12 @@ export const mockAddAccountReposiory = (): AddAccountReposiory => {
 
 export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
   class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
-    async loadByEmail (email: string): Promise<AccountModel> {
-      return await Promise.resolve(mockAccountModel())
+    async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result> {
+      return await Promise.resolve({
+        id: 'any_id',
+        name: 'any_name',
+        password: 'any_password'
+      })
     }
   }
 
@@ -41,7 +42,12 @@ export const mockLoadAccountByTokenRepository = (): LoadAccountByTokenRepository
     async loadByToken (
       token: string, role?: string
     ): Promise<LoadAccountByTokenRepository.Result> {
-      return await Promise.resolve(mockAccountModel())
+      return await Promise.resolve({
+        id: 'any_id',
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password'
+      })
     }
   }
 

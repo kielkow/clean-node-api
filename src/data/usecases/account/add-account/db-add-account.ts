@@ -1,16 +1,14 @@
 import {
   AddAccount,
   Hasher,
-  AddAccountReposiory,
+  AddAccountRepository,
   LoadAccountByEmailRepository
 } from './db-add-account-protocols'
-
-import { AccountModel } from '@/domain/models/account'
 
 export class DbAddAccount implements AddAccount {
   constructor (
     private readonly hasher: Hasher,
-    private readonly addAccountRepository: AddAccountReposiory,
+    private readonly addAccountRepository: AddAccountRepository,
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository
   ) {}
 
@@ -19,16 +17,16 @@ export class DbAddAccount implements AddAccount {
       accountData.email
     )
 
-    let newAccount: AccountModel = null
+    let isValid = false
 
     if (!account) {
       const hashedPassword = await this.hasher.hash(accountData.password)
 
-      newAccount = await this.addAccountRepository.add(
+      isValid = await this.addAccountRepository.add(
         { ...accountData, password: hashedPassword }
       )
     }
 
-    return newAccount != null
+    return isValid
   }
 }
