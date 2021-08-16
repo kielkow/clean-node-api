@@ -10,6 +10,9 @@ import {
 import {
   UpdateAccessTokenRepository
 } from '@/data/protocols/db/account/update-access-token-repository'
+import {
+  CheckAccountByEmailRepository
+} from '@/data/protocols/db/account/check-account-by-email-repository'
 
 export const mockAddAccountReposiory = (): AddAccountRepository => {
   class AddAccountReposioryStub implements AddAccountRepository {
@@ -35,6 +38,16 @@ export const mockLoadAccountByEmailRepository = (): LoadAccountByEmailRepository
   }
 
   return new LoadAccountByEmailRepositoryStub()
+}
+
+export const mockCheckAccountByEmailRepository = (): CheckAccountByEmailRepository => {
+  class CheckAccountByEmailRepositoryStub implements CheckAccountByEmailRepository {
+    async checkByEmail (email: string): Promise<CheckAccountByEmailRepository.Result> {
+      return await Promise.resolve(false)
+    }
+  }
+
+  return new CheckAccountByEmailRepositoryStub()
 }
 
 export const mockLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
