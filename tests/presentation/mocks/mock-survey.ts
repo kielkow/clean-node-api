@@ -31,7 +31,7 @@ export const mockLoadSurveys = (): LoadSurveys => {
 
 export const mockLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
-    async loadById (id: string): Promise<SurveyModel> {
+    async loadById (id: string): Promise<LoadSurveyById.Result> {
       return await Promise.resolve(mockSurveyModel())
     }
   }
