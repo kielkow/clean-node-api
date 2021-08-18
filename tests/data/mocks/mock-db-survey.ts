@@ -5,6 +5,9 @@ import {
   LoadSurveyByIdRepository
 } from '@/data/protocols/db/survey/load-survey-by-id-repository'
 import {
+  CheckSurveyByIdRepository
+} from '@/data/protocols/db/survey/check-survey-by-id-repository'
+import {
   LoadSurveysRepository
 } from '@/data/protocols/db/survey/load-surveys-repository'
 
@@ -29,6 +32,16 @@ export const mockLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
   }
 
   return new LoadSurveyByIdRepositoryStub()
+}
+
+export const mockCheckSurveyByIdRepository = (): CheckSurveyByIdRepository => {
+  class CheckSurveyByIdRepositoryStub implements CheckSurveyByIdRepository {
+    async checkById (id: string): Promise<CheckSurveyByIdRepository.Result> {
+      return await Promise.resolve(true)
+    }
+  }
+
+  return new CheckSurveyByIdRepositoryStub()
 }
 
 export const mockLoadSurveysRepository = (): LoadSurveysRepository => {

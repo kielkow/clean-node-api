@@ -8,6 +8,7 @@ import {
 
 import { LoadSurveys } from '@/domain/usecases/survey/load-surveys'
 import { LoadSurveyById } from '@/domain/usecases/survey/load-survey-by-id'
+import { CheckSurveyById } from '@/domain/usecases/survey/check-survey-by-id'
 
 export const mockAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {
@@ -37,4 +38,14 @@ export const mockLoadSurveyById = (): LoadSurveyById => {
   }
 
   return new LoadSurveyByIdStub()
+}
+
+export const mockCheckSurveyById = (): CheckSurveyById => {
+  class CheckSurveyByIdStub implements CheckSurveyById {
+    async checkById (id: string): Promise<CheckSurveyById.Result> {
+      return await Promise.resolve(true)
+    }
+  }
+
+  return new CheckSurveyByIdStub()
 }

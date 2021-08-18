@@ -4,6 +4,7 @@ import {
 } from '@/infra/db/mongodb/survey/survey-mongo-repository'
 
 import { Collection } from 'mongodb'
+import FakeObjectID from 'bson-objectid'
 
 let surveyCollection: Collection
 let surveyResultCollection: Collection
@@ -147,6 +148,35 @@ describe('Survey Mongo Repository', () => {
 
       expect(survey).toBeTruthy()
       expect(survey.id).toBeTruthy()
+    })
+  })
+
+  describe('checkById()', () => {
+    test('Should return true if survey exists', async () => {
+      const res = await surveyCollection.insertOne(
+        {
+          question: 'any_question',
+          answers: [
+            {
+              image: 'any_image',
+              answer: 'any_answer'
+            }
+          ],
+          date: new Date()
+        }
+      )
+
+      const sut = makeSut()
+      const surveyExists = await sut.checkById(res.ops[0]._id)
+
+      expect(surveyExists).toBe(true)
+    })
+
+    test('Should return false if survey not exists', async () => {
+      const sut = makeSut()
+      const surveyExists = await sut.checkById(FakeObjectID.generate())
+
+      expect(surveyExists).toBe(false)
     })
   })
 })
