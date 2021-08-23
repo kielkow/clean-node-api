@@ -149,6 +149,49 @@ describe('Survey Mongo Repository', () => {
       expect(survey).toBeTruthy()
       expect(survey.id).toBeTruthy()
     })
+
+    test('Should return null if survey does not exists', async () => {
+      const sut = makeSut()
+      const survey = await sut.loadById(FakeObjectID.generate())
+
+      expect(survey).toBeFalsy()
+    })
+  })
+
+  describe('loadAnswers()', () => {
+    test('Should load answers by survey on success', async () => {
+      const res = await surveyCollection.insertOne(
+        {
+          question: 'any_question',
+          answers: [
+            {
+              image: 'any_image',
+              answer: 'any_answer'
+            },
+            {
+              answer: 'other_answer'
+            }
+          ],
+          date: new Date()
+        }
+      )
+      const survey = res.ops[0]
+
+      const sut = makeSut()
+      const answers = await sut.loadAnswers(survey._id)
+
+      expect(answers).toStrictEqual([
+        survey.answers[0].answer,
+        survey.answers[1].answer
+      ])
+    })
+
+    test('Should return empty array if survey does not exists', async () => {
+      const sut = makeSut()
+      const answers = await sut.loadAnswers(FakeObjectID.generate())
+
+      expect(answers).toStrictEqual([])
+    })
   })
 
   describe('checkById()', () => {
@@ -172,7 +215,7 @@ describe('Survey Mongo Repository', () => {
       expect(surveyExists).toBe(true)
     })
 
-    test('Should return false if survey not exists', async () => {
+    test('Should return false if survey does not exists', async () => {
       const sut = makeSut()
       const surveyExists = await sut.checkById(FakeObjectID.generate())
 
