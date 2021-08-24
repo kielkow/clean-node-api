@@ -16,8 +16,6 @@ import {
   CheckSurveyByIdRepository
 } from '@/data/protocols/db/survey/check-survey-by-id-repository'
 
-import { SurveyModel } from '@/domain/models/survey'
-
 import { ObjectId } from 'mongodb'
 
 export class SurveyMongoRepository implements
@@ -30,7 +28,7 @@ LoadAnswersBySurveyRepository {
     await surveyCollection.insertOne(surveyData)
   }
 
-  async loadAll (accountId: string): Promise<SurveyModel[]> {
+  async loadAll (accountId: string): Promise<LoadSurveysRepository.Result> {
     const surveyCollection = await MongoHelper.getCollection('surveys')
 
     const query = new QueryBuilder()
