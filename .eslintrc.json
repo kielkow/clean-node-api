@@ -8,6 +8,7 @@
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-namespace": "off",
         "node/no-path-concat":"off",
         "import/export": "off"
