@@ -5,3 +5,4 @@ data
 !src/data
 !tests/data
 globalConfig.json
+package-lock.json
