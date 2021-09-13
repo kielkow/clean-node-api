@@ -70,5 +70,19 @@ describe('Login GraphQL', () => {
       expect(res.data).toBeFalsy()
       expect(res.errors[0].message).toBe('Unauthorized')
     })
+
+    test('Should return InvalidParamError on invalid e-mail', async () => {
+      const { query } = createTestClient({ apolloServer })
+
+      const res: any = await query(loginQuery, {
+        variables: {
+          email: 'email@example',
+          password: '123'
+        }
+      })
+
+      expect(res.data).toBeFalsy()
+      expect(res.errors[0].message).toBe('Invalid param: email')
+    })
   })
 })
