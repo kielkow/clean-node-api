@@ -7,6 +7,8 @@ import {
   LoadSurveyResultRepository
 } from '@/data/protocols/db/survey-result/load-survey-result-repository'
 
+import { SurveyResultModel } from '@/domain/models/survey-result'
+
 import { ObjectId } from 'mongodb'
 import round from 'mongo-round'
 
@@ -14,7 +16,7 @@ export class SurveyResultMongoRepository implements
 SaveSurveyResultRepository,
 LoadSurveyResultRepository {
   async save (data: SaveSurveyResultRepository.Params): Promise<void> {
-    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+    const surveyResultCollection = MongoHelper.getCollection('surveyResults')
 
     await surveyResultCollection.findOneAndUpdate({
       surveyId: new ObjectId(data.surveyId),
@@ -33,7 +35,7 @@ LoadSurveyResultRepository {
     surveyId: string,
     accountId: string
   ): Promise<LoadSurveyResultRepository.Result> {
-    const surveyResultCollection = await MongoHelper.getCollection('surveyResults')
+    const surveyResultCollection = MongoHelper.getCollection('surveyResults')
 
     const query = new QueryBuilder()
       .match({
@@ -74,7 +76,13 @@ LoadSurveyResultRepository {
         },
         currentAccountAnswer: {
           $push: {
-            $cond: [{ $eq: ['$data.accountId', accountId] }, '$data.answer', null]
+            $cond: [
+              {
+                $eq: ['$data.accountId', new ObjectId(accountId)]
+              },
+              '$data.answer',
+              null
+            ]
           }
         }
       })
@@ -203,7 +211,8 @@ LoadSurveyResultRepository {
       })
       .build()
 
-    const surveyResult = await surveyResultCollection.aggregate(query).toArray()
+    const surveyResult = await surveyResultCollection
+      .aggregate<SurveyResultModel>(query).toArray()
 
     return surveyResult.length ? surveyResult[0] : null
   }

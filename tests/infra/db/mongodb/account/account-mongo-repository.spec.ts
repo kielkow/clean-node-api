@@ -19,7 +19,7 @@ describe('Account Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    accountCollection = await MongoHelper.getCollection('accounts')
+    accountCollection = MongoHelper.getCollection('accounts')
 
     await accountCollection.deleteMany({})
   })
@@ -87,7 +87,7 @@ describe('Account Mongo Repository', () => {
 
       const res = await accountCollection.insertOne(mockAddAccountParams())
 
-      const fakeAccount = res.ops[0]
+      const fakeAccount = await accountCollection.findOne({ _id: res.insertedId })
 
       expect(fakeAccount.accessToken).toBeFalsy()
 
