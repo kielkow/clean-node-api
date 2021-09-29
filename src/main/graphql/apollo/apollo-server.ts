@@ -2,7 +2,6 @@ import typeDefs from '@/main/graphql/type-defs'
 import resolvers from '@/main/graphql/resolvers'
 import { authDirectiveTransformer } from '@/main/graphql/directives'
 
-import { Express } from 'express'
 import { GraphQLError } from 'graphql'
 import { ApolloServer } from 'apollo-server-express'
 import { makeExecutableSchema } from '@graphql-tools/schema'
@@ -32,20 +31,14 @@ let schema = makeExecutableSchema({
 })
 schema = authDirectiveTransformer(schema)
 
-export default async (app: Express): Promise<void> => {
-  const server = new ApolloServer({
-    schema,
-    context: ({ req }) => ({ req }),
-    plugins: [{
-      requestDidStart: async () => ({
-        willSendResponse: async (
-          { response, errors }
-        ) => handleErrors(response, errors)
-      })
-    }]
-  })
-
-  await server.start()
-
-  server.applyMiddleware({ app })
-}
+export const setupApolloServer = (): ApolloServer => new ApolloServer({
+  schema,
+  context: ({ req }) => ({ req }),
+  plugins: [{
+    requestDidStart: async () => ({
+      willSendResponse: async (
+        { response, errors }
+      ) => handleErrors(response, errors)
+    })
+  }]
+})
